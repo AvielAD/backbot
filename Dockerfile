@@ -1,6 +1,7 @@
 FROM python:3.8-slim-buster
 
-RUN apt install -y build-essential
+RUN apt update
+RUN apt install build-essential -y
 
 WORKDIR /app
 
