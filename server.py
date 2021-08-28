@@ -12,23 +12,21 @@ sio.attach(app)
 @sio.event
 def connect(sid, environ):
     global chatbot
-    chatbot = ChatBot(sid)
+    chatbot = ChatBot(sid, logic_adapters=[
+        "chatterbot.logic.BestMatch"
+    ])
     trainer = ChatterBotCorpusTrainer(chatbot)
     trainer.train(
-        "chatterbot.corpus.english"
+        "./language/spanish"
     )
-    print("conect", sid)
-
 
 @sio.event
 async def message(sid, data):
     global chatbot
     snd_message="nothing"
-    print("chabot class", type(chatbot))
     if( chatbot is not None):
         snd_message=chatbot.get_response(data['message'])
-        await sio.emit('response', {'id': '2', 'name': 'Bot', 'message': str(snd_message)+sid}, room=sid)
-    print("message invited:", data['message'], "response: ", snd_message)
+        await sio.emit('response', { 'id': '2', 'name': 'Bot', 'message': str(snd_message) }, room=sid)
 
 @sio.event
 def disconnect(sid):
