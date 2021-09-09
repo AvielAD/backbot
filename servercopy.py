@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.INFO)
 
 
 chatbot = ChatBot('General',
-#        storage_adapter='chatterbot.storage.MongoDatabaseAdapter',
+        storage_adapter='chatterbot.storage.MongoDatabaseAdapter',
         logic_adapters=[
             {
                 'import_path': 'chatterbot.logic.BestMatch',
@@ -21,7 +21,7 @@ chatbot = ChatBot('General',
             }
         ],
 
-#        database_uri='mongodb+srv://chatbot:Test1!@cluster0.or3lf.mongodb.net/test'
+        database_uri='mongodb+srv://chatbot:Test1!@cluster0.or3lf.mongodb.net/test'
     )
 trainer = ChatterBotCorpusTrainer(chatbot)
 trainer.train(
