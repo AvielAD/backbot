@@ -6,19 +6,22 @@ from chatterbot.trainers import ChatterBotCorpusTrainer
 import logging
 from chatterbot import comparisons, response_selection
 
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
+logging.basicConfig(level=logging.INFO)
+
 
 chatbot = ChatBot('General',
-        storage_adapter='chatterbot.storage.MongoDatabaseAdapter',
+#        storage_adapter='chatterbot.storage.MongoDatabaseAdapter',
         logic_adapters=[
             {
                 'import_path': 'chatterbot.logic.BestMatch',
                 'statement_comparison_function': comparisons.LevenshteinDistance,
-                'response_selection_method': response_selection.get_first_response
+                'response_selection_method': response_selection.get_first_response,
+                'default_response': 'Lo siento, no comprendo',
+                'maximum_similarity_threshold': 0.85
             }
         ],
-        database_uri='mongodb+srv://chatbot:Test1!@cluster0.or3lf.mongodb.net/test'
+
+#        database_uri='mongodb+srv://chatbot:Test1!@cluster0.or3lf.mongodb.net/test'
     )
 trainer = ChatterBotCorpusTrainer(chatbot)
 trainer.train(
